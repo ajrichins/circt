@@ -70,6 +70,16 @@ def MapArithToCombPass : Pass<"map-arith-to-comb"> {
   let dependentDialects = ["circt::hw::HWDialect, mlir::arith::ArithDialect, circt::comb::CombDialect"];
 }
 
+def PeepholeCombPass : Pass<"peephole-comb"> {
+  let summary = "A set of peephole optimizations coming from manasij";
+  let description = [{
+    A pass that does a series of optimizations mostly targeting the comb dialect, 
+    but also any other dialect that is used in tandem to represent llvm based opts
+  }];
+  let constructor = "circt::createPeepholeCombPass()";
+  let dependentDialects = ["circt::hw::HWDialect, circt::comb::CombDialect"];
+}
+
 def InsertMergeBlocks : Pass<"insert-merge-blocks", "::mlir::ModuleOp"> {
   let summary = "Insert explicit merge blocks";
   let description = [{
